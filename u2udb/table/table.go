@@ -3,15 +3,15 @@ package table
 import (
 	"math/big"
 
-	"github.com/unicornultrafoundation/go-u2u/common"
+	"github.com/sesanetwork/go-sesa/common"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 // Table wraper the underling DB, so all the table's data is stored with a prefix in underling DB
 type Table struct {
 	IteratedReader
-	underlying u2udb.Store
+	underlying sesadb.Store
 }
 
 var (
@@ -39,7 +39,7 @@ func noPrefix(key, prefix []byte) []byte {
  * Database
  */
 
-func New(db u2udb.Store, prefix []byte) *Table {
+func New(db sesadb.Store, prefix []byte) *Table {
 	return &Table{
 		IteratedReader: IteratedReader{
 			prefix:     prefix,
@@ -54,7 +54,7 @@ func (t *Table) NewTable(prefix []byte) *Table {
 }
 
 func (t *Table) Close() error {
-	return u2udb.ErrUnsupportedOp
+	return sesadb.ErrUnsupportedOp
 }
 
 func (t *Table) Drop() {}
@@ -67,7 +67,7 @@ func (t *Table) Delete(key []byte) error {
 	return t.underlying.Delete(prefixed(key, t.prefix))
 }
 
-func (t *Table) NewBatch() u2udb.Batch {
+func (t *Table) NewBatch() sesadb.Batch {
 	return &batch{t.underlying.NewBatch(), t.prefix}
 }
 
@@ -98,7 +98,7 @@ func (t *Table) Compact(start []byte, limit []byte) error {
  */
 
 type batch struct {
-	batch  u2udb.Batch
+	batch  sesadb.Batch
 	prefix []byte
 }
 
@@ -122,7 +122,7 @@ func (b *batch) Reset() {
 	b.batch.Reset()
 }
 
-func (b *batch) Replay(w u2udb.Writer) error {
+func (b *batch) Replay(w sesadb.Writer) error {
 	return b.batch.Replay(&replayer{w, b.prefix})
 }
 
@@ -131,7 +131,7 @@ func (b *batch) Replay(w u2udb.Writer) error {
  */
 
 type replayer struct {
-	writer u2udb.Writer
+	writer sesadb.Writer
 	prefix []byte
 }
 

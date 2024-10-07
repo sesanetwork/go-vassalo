@@ -1,6 +1,6 @@
 package devnulldb
 
-import "github.com/unicornultrafoundation/go-helios/u2udb"
+import "github.com/sesanetwork/go-vassalo/sesadb"
 
 // Database is an always empty database.
 type Database struct{}
@@ -42,14 +42,14 @@ func (db *Database) Delete(key []byte) error {
 
 // NewBatch creates a write-only key-value store that buffers changes to its host
 // database until a final write is called.
-func (db *Database) NewBatch() u2udb.Batch {
+func (db *Database) NewBatch() sesadb.Batch {
 	return &batch{}
 }
 
 // NewIterator creates a binary-alphabetical iterator over a subset
 // of database content with a particular key prefix, starting at a particular
 // initial key (or after, if it does not exist).
-func (db *Database) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (db *Database) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	return &iterator{}
 }
 
@@ -58,7 +58,7 @@ func (db *Database) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
 // content of snapshot are guaranteed to be consistent.
 //
 // The snapshot must be released after use, by calling Release method.
-func (db *Database) GetSnapshot() (u2udb.Snapshot, error) {
+func (db *Database) GetSnapshot() (sesadb.Snapshot, error) {
 	return &Snapshot{New()}, nil
 }
 
@@ -109,7 +109,7 @@ func (b *batch) Reset() {
 }
 
 // Replay replays the batch contents.
-func (b *batch) Replay(w u2udb.Writer) error {
+func (b *batch) Replay(w sesadb.Writer) error {
 	return nil
 }
 

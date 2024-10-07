@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 // ProcessRoot calculates Event votes only for the new root.

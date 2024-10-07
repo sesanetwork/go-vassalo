@@ -10,10 +10,10 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/unicornultrafoundation/go-helios/common/bigendian"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/devnulldb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/leveldb"
+	"github.com/sesanetwork/go-vassalo/common/bigendian"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/devnulldb"
+	"github.com/sesanetwork/go-vassalo/sesadb/leveldb"
 )
 
 // TestVecflushableNoBackup tests normal operation of vecflushable, before and after
@@ -214,7 +214,7 @@ func loopOp(operation func(key []byte, val []byte), iterations int) {
 	}
 }
 
-func tempLevelDB() (u2udb.Store, error) {
+func tempLevelDB() (sesadb.Store, error) {
 	cache16mb := func(string) (int, int) {
 		return 16 * opt.MiB, 64
 	}

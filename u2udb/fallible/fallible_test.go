@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/memorydb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/memorydb"
 )
 
 func TestFallible(t *testing.T) {
@@ -15,7 +15,7 @@ func TestFallible(t *testing.T) {
 		key  = []byte("test-key")
 		key2 = []byte("test-key-2")
 		val  = []byte("test-value")
-		db   u2udb.Store
+		db   sesadb.Store
 		err  error
 	)
 

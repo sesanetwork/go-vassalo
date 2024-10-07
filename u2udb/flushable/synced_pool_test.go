@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/unicornultrafoundation/go-helios/common/bigendian"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/table"
+	"github.com/sesanetwork/go-vassalo/common/bigendian"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/table"
 )
 
 func TestSyncedPoolUnderlying(t *testing.T) {
@@ -45,7 +45,7 @@ func TestSyncedPoolUnderlying(t *testing.T) {
 	_, err = pool.Initialize([]string{dbname1, dbname2}, nil)
 	require.NoError(err)
 
-	pushData := func(n uint32, w u2udb.Store) {
+	pushData := func(n uint32, w sesadb.Store) {
 		const size uint32 = 10
 		for i := size; i > 0; i-- {
 			key := bigendian.Uint32ToBytes(i + size*n)

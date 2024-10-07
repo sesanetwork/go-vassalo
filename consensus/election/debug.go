@@ -4,7 +4,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
+	"github.com/sesanetwork/go-vassalo/hash"
 )
 
 // DebugStateHash may be used in tests to match election state

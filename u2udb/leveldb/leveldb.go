@@ -13,8 +13,8 @@ import (
 	"github.com/syndtr/goleveldb/leveldb/filter"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 	"github.com/syndtr/goleveldb/leveldb/util"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/utils/piecefunc"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/utils/piecefunc"
 )
 
 const (
@@ -215,7 +215,7 @@ func (db *Database) Delete(key []byte) error {
 
 // NewBatch creates a write-only key-value store that buffers changes to its host
 // database until a final write is called.
-func (db *Database) NewBatch() u2udb.Batch {
+func (db *Database) NewBatch() sesadb.Batch {
 	return &batch{
 		db: db.underlying,
 		b:  new(leveldb.Batch),
@@ -225,7 +225,7 @@ func (db *Database) NewBatch() u2udb.Batch {
 // NewIterator creates a binary-alphabetical iterator over a subset
 // of database content with a particular key prefix, starting at a particular
 // initial key (or after, if it does not exist).
-func (db *Database) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (db *Database) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	return db.underlying.NewIterator(bytesPrefixRange(prefix, start), nil)
 }
 
@@ -234,7 +234,7 @@ func (db *Database) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
 // content of snapshot are guaranteed to be consistent.
 //
 // The snapshot must be released after use, by calling Release method.
-func (db *Database) GetSnapshot() (u2udb.Snapshot, error) {
+func (db *Database) GetSnapshot() (sesadb.Snapshot, error) {
 	snap, err := db.underlying.GetSnapshot()
 	if err != nil {
 		return nil, err
@@ -311,13 +311,13 @@ func (b *batch) Reset() {
 }
 
 // Replay replays the batch contents.
-func (b *batch) Replay(w u2udb.Writer) error {
+func (b *batch) Replay(w sesadb.Writer) error {
 	return b.b.Replay(&replayer{writer: w})
 }
 
 // replayer is a small wrapper to implement the correct replay methods.
 type replayer struct {
-	writer  u2udb.Writer
+	writer  sesadb.Writer
 	failure error
 }
 
@@ -378,7 +378,7 @@ func (s *Snapshot) Has(key []byte) (ret bool, err error) {
 // NewIterator creates a binary-alphabetical iterator over a subset
 // of database content with a particular key prefix, starting at a particular
 // initial key (or after, if it does not exist).
-func (s *Snapshot) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (s *Snapshot) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	return s.snap.NewIterator(bytesPrefixRange(prefix, start), nil)
 }
 

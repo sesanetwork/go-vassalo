@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/unicornultrafoundation/go-helios/common/bigendian"
-	"github.com/unicornultrafoundation/go-helios/common/littleendian"
+	"github.com/sesanetwork/go-vassalo/common/bigendian"
+	"github.com/sesanetwork/go-vassalo/common/littleendian"
 )
 
 func Test_IntToBytes(t *testing.T) {

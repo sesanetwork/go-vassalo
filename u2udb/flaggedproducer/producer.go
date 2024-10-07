@@ -4,18 +4,18 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/flushable"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/flushable"
 )
 
 type Producer struct {
-	backend    u2udb.IterableDBProducer
+	backend    sesadb.IterableDBProducer
 	mu         sync.Mutex
 	dbs        map[string]*flaggedStore
 	flushIDKey []byte
 }
 
-func Wrap(backend u2udb.IterableDBProducer, flushIDKey []byte) *Producer {
+func Wrap(backend sesadb.IterableDBProducer, flushIDKey []byte) *Producer {
 	return &Producer{
 		backend:    backend,
 		dbs:        make(map[string]*flaggedStore),
@@ -23,7 +23,7 @@ func Wrap(backend u2udb.IterableDBProducer, flushIDKey []byte) *Producer {
 	}
 }
 
-func (f *Producer) OpenDB(name string) (u2udb.Store, error) {
+func (f *Producer) OpenDB(name string) (sesadb.Store, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	// open existing DB
@@ -74,7 +74,7 @@ func (f *Producer) Flush(id []byte) error {
 }
 
 func (f *Producer) Initialize(dbNames []string, flushID []byte) ([]byte, error) {
-	dbs := map[string]u2udb.Store{}
+	dbs := map[string]sesadb.Store{}
 	for _, name := range dbNames {
 		db, err := f.OpenDB(name)
 		if err != nil {

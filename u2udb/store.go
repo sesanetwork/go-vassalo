@@ -1,10 +1,10 @@
-package u2udb
+package sesadb
 
 import (
 	"errors"
 	"io"
 
-	"github.com/unicornultrafoundation/go-u2u/ethdb"
+	"github.com/sesanetwork/go-sesa/ethdb"
 )
 
 var (

@@ -1,6 +1,6 @@
 package ancestor
 
-import "github.com/unicornultrafoundation/go-helios/hash"
+import "github.com/sesanetwork/go-vassalo/hash"
 
 type Metric uint64
 

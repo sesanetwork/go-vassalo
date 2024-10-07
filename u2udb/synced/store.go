@@ -3,17 +3,17 @@ package synced
 import (
 	"sync"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
-// store wrapper around any u2udb.Store.
+// store wrapper around any sesadb.Store.
 type store struct {
 	iteratedReader
-	underlying u2udb.Store
+	underlying sesadb.Store
 }
 
 // WrapStore underlying db to make its methods synced with mu.
-func WrapStore(parent u2udb.Store, mu *sync.RWMutex) u2udb.Store {
+func WrapStore(parent sesadb.Store, mu *sync.RWMutex) sesadb.Store {
 	s := &store{
 		iteratedReader: iteratedReader{
 			mu:         mu,
@@ -66,7 +66,7 @@ func (s *store) Drop() {
 }
 
 // NewBatch creates new batch.
-func (s *store) NewBatch() u2udb.Batch {
+func (s *store) NewBatch() sesadb.Batch {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
@@ -84,7 +84,7 @@ func (s *store) NewBatch() u2udb.Batch {
 // syncedBatch wraps a batch.
 type syncedBatch struct {
 	mu         *sync.RWMutex
-	underlying u2udb.Batch
+	underlying sesadb.Batch
 }
 
 // Put adds "add key-value pair" operation into batch.
@@ -116,7 +116,7 @@ func (b *syncedBatch) Reset() {
 }
 
 // Replay replays the batch contents.
-func (b *syncedBatch) Replay(w u2udb.Writer) error {
+func (b *syncedBatch) Replay(w sesadb.Writer) error {
 	b.mu.Lock()
 	defer b.mu.Unlock()
 

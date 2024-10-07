@@ -13,12 +13,12 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/unicornultrafoundation/go-u2u/common"
+	"github.com/sesanetwork/go-sesa/common"
 
-	"github.com/unicornultrafoundation/go-helios/common/bigendian"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/leveldb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/table"
+	"github.com/sesanetwork/go-vassalo/common/bigendian"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/leveldb"
+	"github.com/sesanetwork/go-vassalo/sesadb/table"
 )
 
 func TestFlushable(t *testing.T) {
@@ -40,7 +40,7 @@ func TestFlushable(t *testing.T) {
 	defer leveldb2.Close()
 
 	// create wrappers
-	dbs := map[string]u2udb.Store{
+	dbs := map[string]sesadb.Store{
 		"leveldb": leveldb1,
 		"memory":  Wrap(devnull),
 	}
@@ -53,7 +53,7 @@ func TestFlushable(t *testing.T) {
 	baseLdb := table.New(dbs["leveldb"], []byte{})
 	baseMem := table.New(dbs["memory"], []byte{})
 
-	dbsTables := [][]u2udb.Store{
+	dbsTables := [][]sesadb.Store{
 		{
 			dbs["leveldb"],
 			baseLdb.NewTable([]byte{0, 1}),
@@ -68,7 +68,7 @@ func TestFlushable(t *testing.T) {
 
 	baseLdb = table.New(flushableDbs["cache-over-leveldb"], []byte{})
 	baseMem = table.New(flushableDbs["cache-over-memory"], []byte{})
-	flushableDbsTables := [][]u2udb.Store{
+	flushableDbsTables := [][]sesadb.Store{
 		{
 			flushableDbs["cache-over-leveldb"],
 			baseLdb.NewTable([]byte{0, 1}),
@@ -114,7 +114,7 @@ func TestFlushable(t *testing.T) {
 		// random put/delete operations
 		putDeleteRandom := func() {
 			for j := 0; j < tablesNum; j++ {
-				var batches []u2udb.Batch
+				var batches []sesadb.Batch
 				for i := 0; i < groupsNum; i++ {
 					batches = append(batches, dbsTables[i][j].NewBatch())
 					batches = append(batches, flushableDbsTables[i][j].NewBatch())
@@ -178,9 +178,9 @@ func TestFlushable(t *testing.T) {
 		for j := 0; j < tablesNum; j++ {
 			expectPairs := []kv{}
 
-			testForEach := func(db u2udb.Store, first bool) {
+			testForEach := func(db sesadb.Store, first bool) {
 
-				var it u2udb.Iterator
+				var it sesadb.Iterator
 				if try%4 == 0 {
 					it = db.NewIterator(nil, nil)
 				} else if try%4 == 1 {
@@ -396,7 +396,7 @@ func cache16mb(string) (int, int) {
 	return 16 * opt.MiB, 64
 }
 
-func dbProducer(name string) u2udb.DBProducer {
+func dbProducer(name string) sesadb.DBProducer {
 	dir, err := ioutil.TempDir("", name)
 	if err != nil {
 		panic(err)

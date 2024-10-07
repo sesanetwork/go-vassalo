@@ -1,6 +1,6 @@
 package pos
 
-import "github.com/unicornultrafoundation/go-helios/native/idx"
+import "github.com/sesanetwork/go-vassalo/native/idx"
 
 type (
 	// Weight amount.

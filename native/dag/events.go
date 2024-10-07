@@ -3,8 +3,8 @@ package dag
 import (
 	"strings"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 // Events is a ordered slice of events.

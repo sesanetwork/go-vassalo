@@ -8,12 +8,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/dag/tdag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/utils/cachescale"
-	"github.com/unicornultrafoundation/go-helios/utils/datasemaphore"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/dag/tdag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/utils/cachescale"
+	"github.com/sesanetwork/go-vassalo/utils/datasemaphore"
 )
 
 func TestProcessor(t *testing.T) {

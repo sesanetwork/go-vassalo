@@ -12,11 +12,11 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	"github.com/unicornultrafoundation/go-helios/gossip/basestream"
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/dag/tdag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/gossip/basestream"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/dag/tdag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 func defaultConfig() Config {

@@ -7,12 +7,12 @@ import (
 	"sync"
 
 	"github.com/status-im/keycard-go/hexutils"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/readonlystore"
-	"github.com/unicornultrafoundation/go-helios/u2udb/synced"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/readonlystore"
+	"github.com/sesanetwork/go-vassalo/sesadb/synced"
 )
 
-var _ u2udb.FlushableDBProducer = (*SyncedPool)(nil)
+var _ sesadb.FlushableDBProducer = (*SyncedPool)(nil)
 
 const (
 	DirtyPrefix = 0xde
@@ -21,11 +21,11 @@ const (
 
 type wrappers struct {
 	Flushable     *closeDropWrapped
-	ReadonlyStore u2udb.Store
+	ReadonlyStore sesadb.Store
 }
 
 type SyncedPool struct {
-	producer u2udb.DBProducer
+	producer sesadb.DBProducer
 
 	wrappers      map[string]wrappers
 	queuedDrops   map[string]struct{}
@@ -37,7 +37,7 @@ type SyncedPool struct {
 	flushing sync.RWMutex
 }
 
-func NewSyncedPool(producer u2udb.DBProducer, flushIDKey []byte) *SyncedPool {
+func NewSyncedPool(producer sesadb.DBProducer, flushIDKey []byte) *SyncedPool {
 	if producer == nil {
 		panic("nil producer")
 	}
@@ -64,11 +64,11 @@ func (p *SyncedPool) Initialize(dbNames []string, flushID []byte) ([]byte, error
 }
 
 func (p *SyncedPool) callbacks(name string) (
-	onOpen func() (u2udb.Store, error),
+	onOpen func() (sesadb.Store, error),
 	onClose func() error,
 	onDrop func(),
 ) {
-	onOpen = func() (u2udb.Store, error) {
+	onOpen = func() (sesadb.Store, error) {
 		return p.producer.OpenDB(name)
 	}
 
@@ -102,14 +102,14 @@ func (p *SyncedPool) popQueuedDrops() []string {
 	return res
 }
 
-func (p *SyncedPool) OpenDB(name string) (u2udb.Store, error) {
+func (p *SyncedPool) OpenDB(name string) (sesadb.Store, error) {
 	p.Lock()
 	defer p.Unlock()
 
 	return p.getDB(name), nil
 }
 
-func (p *SyncedPool) GetUnderlying(name string) (u2udb.Store, error) {
+func (p *SyncedPool) GetUnderlying(name string) (sesadb.Store, error) {
 	p.Lock()
 	defer p.Unlock()
 
@@ -230,7 +230,7 @@ func (p *SyncedPool) checkDBsSynced(flushID []byte) ([]byte, error) {
 	p.Lock()
 	defer p.Unlock()
 
-	dbs := map[string]u2udb.Store{}
+	dbs := map[string]sesadb.Store{}
 	for name, w := range p.wrappers {
 		db, err := w.Flushable.InitUnderlyingDb()
 		if err != nil {
@@ -241,7 +241,7 @@ func (p *SyncedPool) checkDBsSynced(flushID []byte) ([]byte, error) {
 	return CheckDBsSynced(dbs, p.flushIDKey, flushID)
 }
 
-func CheckDBsSynced(dbs map[string]u2udb.Store, flushIDKey, flushID []byte) ([]byte, error) {
+func CheckDBsSynced(dbs map[string]sesadb.Store, flushIDKey, flushID []byte) ([]byte, error) {
 	var (
 		descrs = []string{}
 		list   = func() string {
@@ -297,6 +297,6 @@ func (p *SyncedPool) Close() error {
 	return nil
 }
 
-func MarkFlushID(db u2udb.Store, key []byte, prefix byte, flushID []byte) error {
+func MarkFlushID(db sesadb.Store, key []byte, prefix byte, flushID []byte) error {
 	return db.Put(key, append([]byte{prefix}, flushID...))
 }

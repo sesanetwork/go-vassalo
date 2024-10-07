@@ -1,9 +1,9 @@
 package types
 
 import (
-	"github.com/unicornultrafoundation/go-u2u/rlp"
+	"github.com/sesanetwork/go-sesa/rlp"
 
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 // Cheaters is a slice type for storing cheaters list.

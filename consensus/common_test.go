@@ -3,14 +3,14 @@ package consensus
 import (
 	"math/rand"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/native/pos"
-	"github.com/unicornultrafoundation/go-helios/types"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/memorydb"
-	"github.com/unicornultrafoundation/go-helios/utils/adapters"
-	"github.com/unicornultrafoundation/go-helios/vecfc"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/pos"
+	"github.com/sesanetwork/go-vassalo/types"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/memorydb"
+	"github.com/sesanetwork/go-vassalo/utils/adapters"
+	"github.com/sesanetwork/go-vassalo/vecfc"
 )
 
 type applyBlockFn func(block *types.Block) *pos.Validators
@@ -48,7 +48,7 @@ func FakeConsensus(nodes []idx.ValidatorID, weights []pos.Weight, mods ...memory
 		}
 	}
 
-	openEDB := func(epoch idx.Epoch) u2udb.Store {
+	openEDB := func(epoch idx.Epoch) sesadb.Store {
 		return memorydb.New()
 	}
 	crit := func(err error) {

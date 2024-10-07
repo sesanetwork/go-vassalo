@@ -6,8 +6,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/unicornultrafoundation/go-helios/gossip/basestream"
-	"github.com/unicornultrafoundation/go-helios/utils/workers"
+	"github.com/sesanetwork/go-vassalo/gossip/basestream"
+	"github.com/sesanetwork/go-vassalo/utils/workers"
 )
 
 var (

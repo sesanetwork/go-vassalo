@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/utils"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/utils"
 )
 
 func TestASCIIschemeToDAG(t *testing.T) {

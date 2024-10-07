@@ -4,11 +4,11 @@ import (
 	"math"
 	"sync"
 
-	"github.com/unicornultrafoundation/go-helios/eventcheck"
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/utils/wlru"
+	"github.com/sesanetwork/go-vassalo/eventcheck"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/utils/wlru"
 )
 
 type (

@@ -3,9 +3,9 @@ package vecfc
 import (
 	"fmt"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/native/pos"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/pos"
 )
 
 type kv struct {

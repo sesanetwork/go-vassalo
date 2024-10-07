@@ -9,10 +9,10 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/unicornultrafoundation/go-u2u/common"
+	"github.com/sesanetwork/go-sesa/common"
 
-	"github.com/unicornultrafoundation/go-helios/common/bigendian"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/common/bigendian"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 type (

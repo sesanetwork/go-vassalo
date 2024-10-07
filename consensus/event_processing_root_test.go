@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/dag/tdag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/dag/tdag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 func TestHashgraphClassicRoots(t *testing.T) {

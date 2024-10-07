@@ -3,9 +3,9 @@ package vecflushable
 import (
 	"errors"
 
-	"github.com/unicornultrafoundation/go-u2u/common"
+	"github.com/sesanetwork/go-sesa/common"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 var (
@@ -30,7 +30,7 @@ type VecFlushable struct {
 	memSize    int
 }
 
-func wrap(parent u2udb.Store, sizeLimit, batchSize int) *VecFlushable {
+func wrap(parent sesadb.Store, sizeLimit, batchSize int) *VecFlushable {
 	if parent == nil {
 		panic("nil parent")
 	}
@@ -40,8 +40,8 @@ func wrap(parent u2udb.Store, sizeLimit, batchSize int) *VecFlushable {
 	}
 }
 
-func Wrap(parent u2udb.Store, sizeLimit int) *VecFlushable {
-	return wrap(parent, sizeLimit, u2udb.IdealBatchSize)
+func Wrap(parent sesadb.Store, sizeLimit int) *VecFlushable {
+	return wrap(parent, sizeLimit, sesadb.IdealBatchSize)
 }
 
 func (w *VecFlushable) clearModified() {
@@ -129,11 +129,11 @@ func (w *VecFlushable) Delete(key []byte) error {
 	panic(errNotImplemented)
 }
 
-func (w *VecFlushable) GetSnapshot() (u2udb.Snapshot, error) {
+func (w *VecFlushable) GetSnapshot() (sesadb.Snapshot, error) {
 	panic(errNotImplemented)
 }
 
-func (w *VecFlushable) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (w *VecFlushable) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	panic(errNotImplemented)
 }
 
@@ -145,6 +145,6 @@ func (w *VecFlushable) Compact(start []byte, limit []byte) error {
 	panic(errNotImplemented)
 }
 
-func (w *VecFlushable) NewBatch() u2udb.Batch {
+func (w *VecFlushable) NewBatch() sesadb.Batch {
 	panic(errNotImplemented)
 }

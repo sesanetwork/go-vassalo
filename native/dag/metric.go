@@ -3,7 +3,7 @@ package dag
 import (
 	"fmt"
 
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 type Metric struct {

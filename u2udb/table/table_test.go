@@ -10,12 +10,12 @@ import (
 	"github.com/status-im/keycard-go/hexutils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/unicornultrafoundation/go-u2u/common"
+	"github.com/sesanetwork/go-sesa/common"
 
-	u2udb "github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/flushable"
-	"github.com/unicornultrafoundation/go-helios/u2udb/leveldb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/memorydb"
+	sesadb "github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/flushable"
+	"github.com/sesanetwork/go-vassalo/sesadb/leveldb"
+	"github.com/sesanetwork/go-vassalo/sesadb/memorydb"
 )
 
 func tempLevelDB(name string) *leveldb.Database {
@@ -59,7 +59,7 @@ func TestTable(t *testing.T) {
 	defer leveldb2.Drop()
 	defer leveldb2.Close()
 
-	for name, db := range map[string]u2udb.Store{
+	for name, db := range map[string]sesadb.Store{
 		"memory":                       memorydb.New(),
 		"leveldb":                      leveldb1,
 		"cache-over-leveldb":           flushable.Wrap(leveldb2),
@@ -70,7 +70,7 @@ func TestTable(t *testing.T) {
 
 			// tables
 			t1 := New(db, []byte("t1"))
-			tables := map[string]u2udb.Store{
+			tables := map[string]sesadb.Store{
 				"/t1":      t1,
 				"/x/t1/t2": New(db, []byte("x")).NewTable([]byte("t1t2")),
 				"/t2":      New(db, []byte("t2")),

@@ -9,10 +9,10 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	"github.com/unicornultrafoundation/go-helios/common/bigendian"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/leveldb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/table"
+	"github.com/sesanetwork/go-vassalo/common/bigendian"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/leveldb"
+	"github.com/sesanetwork/go-vassalo/sesadb/table"
 )
 
 func TestFlushableParallel(t *testing.T) {
@@ -130,7 +130,7 @@ func TestFlushableParallel(t *testing.T) {
 	})
 }
 
-func tmpDir() u2udb.DBProducer {
+func tmpDir() sesadb.DBProducer {
 	dir, err := ioutil.TempDir("", "test-flushable")
 	if err != nil {
 		panic(fmt.Sprintf("can't create temporary directory %s: %v", dir, err))

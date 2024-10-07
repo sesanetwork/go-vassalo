@@ -1,6 +1,6 @@
 package wmedian
 
-import "github.com/unicornultrafoundation/go-helios/native/pos"
+import "github.com/sesanetwork/go-vassalo/native/pos"
 
 type WeightedValue interface {
 	Weight() pos.Weight

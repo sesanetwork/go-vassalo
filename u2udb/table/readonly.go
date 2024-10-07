@@ -1,10 +1,10 @@
 package table
 
-import "github.com/unicornultrafoundation/go-helios/u2udb"
+import "github.com/sesanetwork/go-vassalo/sesadb"
 
 type IteratedReader struct {
 	prefix     []byte
-	underlying u2udb.IteratedReader
+	underlying sesadb.IteratedReader
 }
 
 func (t *IteratedReader) Has(key []byte) (bool, error) {
@@ -15,11 +15,11 @@ func (t *IteratedReader) Get(key []byte) ([]byte, error) {
 	return t.underlying.Get(prefixed(key, t.prefix))
 }
 
-func (t *IteratedReader) NewIterator(itPrefix []byte, start []byte) u2udb.Iterator {
+func (t *IteratedReader) NewIterator(itPrefix []byte, start []byte) sesadb.Iterator {
 	return &iterator{t.underlying.NewIterator(prefixed(itPrefix, t.prefix), start), t.prefix}
 }
 
-func (t *Table) GetSnapshot() (u2udb.Snapshot, error) {
+func (t *Table) GetSnapshot() (sesadb.Snapshot, error) {
 	snap, err := t.underlying.GetSnapshot()
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (t *Table) Stat(property string) (string, error) {
  */
 
 type iterator struct {
-	it     u2udb.Iterator
+	it     sesadb.Iterator
 	prefix []byte
 }
 
@@ -69,7 +69,7 @@ func (it *iterator) Release() {
 
 type snapshot struct {
 	IteratedReader
-	snap u2udb.Snapshot
+	snap sesadb.Snapshot
 }
 
 func (s *snapshot) Release() {

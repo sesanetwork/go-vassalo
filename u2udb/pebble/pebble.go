@@ -6,8 +6,8 @@ import (
 
 	"github.com/cockroachdb/pebble"
 	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/utils/piecefunc"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/utils/piecefunc"
 )
 
 // Database is a persistent key-value store. Apart from basic data storage
@@ -245,7 +245,7 @@ func (db *Database) Delete(key []byte) error {
 
 // NewBatch creates a write-only key-value store that buffers changes to its host
 // database until a final write is called.
-func (db *Database) NewBatch() u2udb.Batch {
+func (db *Database) NewBatch() sesadb.Batch {
 	return &batch{
 		db: db.underlying,
 		b:  db.underlying.NewBatch(),
@@ -255,7 +255,7 @@ func (db *Database) NewBatch() u2udb.Batch {
 // NewIterator creates a binary-alphabetical iterator over a subset
 // of database content with a particular key prefix, starting at a particular
 // initial key (or after, if it does not exist).
-func (db *Database) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (db *Database) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	x := iterator{db.underlying.NewIter(bytesPrefixRange(prefix, start)), false, false}
 	return &x
 }
@@ -367,7 +367,7 @@ func (db *Database) Path() string {
 // content of snapshot are guaranteed to be consistent.
 //
 // The snapshot must be released after use, by calling Release method.
-func (db *Database) GetSnapshot() (u2udb.Snapshot, error) {
+func (db *Database) GetSnapshot() (sesadb.Snapshot, error) {
 	return &snapshot{
 		db:   db.underlying,
 		snap: db.underlying.NewSnapshot(),
@@ -406,7 +406,7 @@ func (s *snapshot) Get(key []byte) ([]byte, error) {
 	return clonedValue, err
 }
 
-func (s *snapshot) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (s *snapshot) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	x := iterator{s.snap.NewIter(bytesPrefixRange(prefix, start)), false, false}
 	return &x
 }
@@ -454,7 +454,7 @@ func (b *batch) Reset() {
 }
 
 // Replay replays the batch contents.
-func (b *batch) Replay(w u2udb.Writer) (err error) {
+func (b *batch) Replay(w sesadb.Writer) (err error) {
 	for iter := b.b.Reader(); len(iter) > 0; {
 		kind, key, value, ok := iter.Next()
 		if !ok {

@@ -1,4 +1,4 @@
-# U2U Consensus Protocol
+# sesa Consensus Protocol
 
-An implementation of U2U Consensus protocol based on Hashgraph, aBFT and DPOS
+An implementation of sesa Consensus protocol based on Hashgraph, aBFT and DPOS
 

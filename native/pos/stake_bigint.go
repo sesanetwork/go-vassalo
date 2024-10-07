@@ -3,7 +3,7 @@ package pos
 import (
 	"math/big"
 
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 // ValidatorsBuilderBig is a helper to create Validators object out of bigint numbers

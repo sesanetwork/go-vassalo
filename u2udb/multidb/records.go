@@ -1,9 +1,9 @@
 package multidb
 
 import (
-	"github.com/unicornultrafoundation/go-u2u/rlp"
+	"github.com/sesanetwork/go-sesa/rlp"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 type TableRecord struct {
@@ -11,7 +11,7 @@ type TableRecord struct {
 	Table string
 }
 
-func ReadTablesList(store u2udb.Store, tableRecordsKey []byte) (res []TableRecord, err error) {
+func ReadTablesList(store sesadb.Store, tableRecordsKey []byte) (res []TableRecord, err error) {
 	b, err := store.Get(tableRecordsKey)
 	if err != nil {
 		return nil, err
@@ -23,7 +23,7 @@ func ReadTablesList(store u2udb.Store, tableRecordsKey []byte) (res []TableRecor
 	return
 }
 
-func WriteTablesList(store u2udb.Store, tableRecordsKey []byte, records []TableRecord) error {
+func WriteTablesList(store sesadb.Store, tableRecordsKey []byte, records []TableRecord) error {
 	b, err := rlp.EncodeToBytes(records)
 	if err != nil {
 		return err

@@ -1,15 +1,15 @@
 package vecfc
 
 import (
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/native/pos"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/table"
-	"github.com/unicornultrafoundation/go-helios/utils/cachescale"
-	"github.com/unicornultrafoundation/go-helios/utils/simplewlru"
-	"github.com/unicornultrafoundation/go-helios/vecengine"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/pos"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/table"
+	"github.com/sesanetwork/go-vassalo/utils/cachescale"
+	"github.com/sesanetwork/go-vassalo/utils/simplewlru"
+	"github.com/sesanetwork/go-vassalo/vecengine"
 )
 
 // IndexCacheConfig - config for cache sizes of Engine
@@ -34,10 +34,10 @@ type Index struct {
 
 	getEvent func(hash.Event) dag.Event
 
-	vecDb u2udb.Store
+	vecDb sesadb.Store
 	table struct {
-		HighestBeforeSeq u2udb.Store `table:"S"`
-		LowestAfterSeq   u2udb.Store `table:"s"`
+		HighestBeforeSeq sesadb.Store `table:"S"`
+		LowestAfterSeq   sesadb.Store `table:"s"`
 	}
 
 	cache struct {
@@ -95,7 +95,7 @@ func (vi *Index) initCaches() {
 }
 
 // Reset resets buffers.
-func (vi *Index) Reset(validators *pos.Validators, db u2udb.FlushableKVStore, getEvent func(hash.Event) dag.Event) {
+func (vi *Index) Reset(validators *pos.Validators, db sesadb.FlushableKVStore, getEvent func(hash.Event) dag.Event) {
 	vi.Engine.Reset(validators, db, getEvent)
 	vi.vecDb = db
 	table.MigrateTables(&vi.table, vi.vecDb)

@@ -1,10 +1,10 @@
 package multidb
 
-import "github.com/unicornultrafoundation/go-helios/u2udb"
+import "github.com/sesanetwork/go-vassalo/sesadb"
 
 type closableTable struct {
-	u2udb.Store
-	underlying u2udb.Store
+	sesadb.Store
+	underlying sesadb.Store
 	noDrop     bool
 }
 

@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/unicornultrafoundation/go-helios/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/dag"
 )
 
 type DataSemaphore struct {

@@ -6,28 +6,28 @@ import (
 	"sync"
 
 	rbt "github.com/emirpasic/gods/trees/redblacktree"
-	"github.com/unicornultrafoundation/go-u2u/common"
+	"github.com/sesanetwork/go-sesa/common"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 var (
 	errClosed = errors.New("database closed")
 )
 
-// Flushable is a u2udb.Store wrapper around any Database.
+// Flushable is a sesadb.Store wrapper around any Database.
 // On reading, it looks in memory cache first. If not found, it looks in a parent DB.
 // On writing, it writes only in cache. To flush the cache into parent DB, call Flush().
 type Flushable struct {
 	flushableReader
 	onDrop     func()
-	underlying u2udb.Store
+	underlying sesadb.Store
 
 	sizeEstimation *int
 }
 
 type flushableReader struct {
-	underlying u2udb.IteratedReader
+	underlying sesadb.IteratedReader
 
 	modified *rbt.Tree // modified, comparing to parent, pairs. deleted values are nil
 
@@ -36,7 +36,7 @@ type flushableReader struct {
 
 // Wrap underlying db.
 // All the writes into the cache won't be written in parent until .Flush() is called.
-func Wrap(parent u2udb.Store) *Flushable {
+func Wrap(parent sesadb.Store) *Flushable {
 	if parent == nil {
 		panic("nil parent")
 	}
@@ -45,7 +45,7 @@ func Wrap(parent u2udb.Store) *Flushable {
 }
 
 // WrapWithDrop is the same as Wrap, but defines onDrop callback.
-func WrapWithDrop(parent u2udb.Store, drop func()) *Flushable {
+func WrapWithDrop(parent sesadb.Store, drop func()) *Flushable {
 	if parent == nil {
 		panic("nil parent")
 	}
@@ -212,7 +212,7 @@ func (w *Flushable) flush() error {
 			return err
 		}
 
-		if batch.ValueSize() > u2udb.IdealBatchSize {
+		if batch.ValueSize() > sesadb.IdealBatchSize {
 			err = batch.Write()
 			if err != nil {
 				return err
@@ -248,7 +248,7 @@ type flushableIterator struct {
 	key, val []byte
 	prevKey  []byte
 
-	parentIt u2udb.Iterator
+	parentIt sesadb.Iterator
 	parentOk bool
 
 	treeNode *rbt.Node
@@ -404,7 +404,7 @@ func (it *flushableIterator) Release() {
 // content of snapshot are guaranteed to be consistent.
 //
 // The snapshot must be released after use, by calling Release method.
-func (w *Flushable) GetSnapshot() (u2udb.Snapshot, error) {
+func (w *Flushable) GetSnapshot() (sesadb.Snapshot, error) {
 	w.lock.RLock()
 	defer w.lock.RUnlock()
 	parentSnap, err := w.underlying.GetSnapshot()
@@ -427,7 +427,7 @@ func (w *Flushable) GetSnapshot() (u2udb.Snapshot, error) {
 }
 
 type errIterator struct {
-	u2udb.Iterator
+	sesadb.Iterator
 	err error
 }
 
@@ -438,7 +438,7 @@ func (it *errIterator) Error() error {
 // NewIterator creates a binary-alphabetical iterator over a subset
 // of database content with a particular key prefix, starting at a particular
 // initial key (or after, if it does not exist).
-func (w *flushableReader) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (w *flushableReader) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	w.lock.RLock()
 	defer w.lock.RUnlock()
 
@@ -465,7 +465,7 @@ func (w *flushableReader) NewIterator(prefix []byte, start []byte) u2udb.Iterato
  */
 
 // NewBatch creates new batch.
-func (w *Flushable) NewBatch() u2udb.Batch {
+func (w *Flushable) NewBatch() sesadb.Batch {
 	return &cacheBatch{db: w}
 }
 
@@ -523,7 +523,7 @@ func (b *cacheBatch) Reset() {
 }
 
 // Replay replays the batch contents.
-func (b *cacheBatch) Replay(w u2udb.Writer) error {
+func (b *cacheBatch) Replay(w sesadb.Writer) error {
 	for _, kv := range b.writes {
 		if kv.v == nil {
 			if err := w.Delete(kv.k); err != nil {
@@ -541,7 +541,7 @@ func (b *cacheBatch) Replay(w u2udb.Writer) error {
 // Snapshot is a DB snapshot.
 type Snapshot struct {
 	flushableReader
-	parentSnap u2udb.Snapshot
+	parentSnap sesadb.Snapshot
 }
 
 func (s *Snapshot) Release() {

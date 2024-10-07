@@ -1,14 +1,14 @@
 package flushable
 
 import (
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/devnulldb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/devnulldb"
 )
 
 // LazyFlushable is a Flushable with delayed DB producer
 type LazyFlushable struct {
 	*Flushable
-	producer func() (u2udb.Store, error)
+	producer func() (sesadb.Store, error)
 }
 
 var (
@@ -18,7 +18,7 @@ var (
 // NewLazy makes flushable with real db producer.
 // Real db won't be produced until first .Flush() is called.
 // All the writes into the cache won't be written in parent until .Flush() is called.
-func NewLazy(producer func() (u2udb.Store, error), drop func()) *LazyFlushable {
+func NewLazy(producer func() (sesadb.Store, error), drop func()) *LazyFlushable {
 	if producer == nil {
 		panic("nil producer")
 	}
@@ -31,14 +31,14 @@ func NewLazy(producer func() (u2udb.Store, error), drop func()) *LazyFlushable {
 }
 
 // InitUnderlyingDb is UnderlyingDb getter. Makes underlying in lazy case.
-func (w *LazyFlushable) InitUnderlyingDb() (u2udb.Store, error) {
+func (w *LazyFlushable) InitUnderlyingDb() (sesadb.Store, error) {
 	w.lock.Lock()
 	defer w.lock.Unlock()
 
 	return w.initUnderlyingDb()
 }
 
-func (w *LazyFlushable) initUnderlyingDb() (u2udb.Store, error) {
+func (w *LazyFlushable) initUnderlyingDb() (sesadb.Store, error) {
 	var err error
 	if w.underlying == devnull && w.producer != nil {
 		w.underlying, err = w.producer()

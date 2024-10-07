@@ -3,16 +3,16 @@ package consensus
 import (
 	"math/big"
 
-	"github.com/unicornultrafoundation/go-u2u/common"
+	"github.com/sesanetwork/go-sesa/common"
 
-	"github.com/unicornultrafoundation/go-helios/consensus/dagidx"
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/native/pos"
-	"github.com/unicornultrafoundation/go-helios/types"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/flushable"
+	"github.com/sesanetwork/go-vassalo/consensus/dagidx"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/pos"
+	"github.com/sesanetwork/go-vassalo/types"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/flushable"
 )
 
 var _ types.Consensus = (*Indexed)(nil)
@@ -35,7 +35,7 @@ type DagIndexer interface {
 	Flush()
 	DropNotFlushed()
 
-	Reset(validators *pos.Validators, db u2udb.FlushableKVStore, getEvent func(hash.Event) dag.Event)
+	Reset(validators *pos.Validators, db sesadb.FlushableKVStore, getEvent func(hash.Event) dag.Event)
 }
 
 // New creates Indexed instance.

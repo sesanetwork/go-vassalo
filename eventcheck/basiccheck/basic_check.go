@@ -4,7 +4,7 @@ import (
 	"errors"
 	"math"
 
-	"github.com/unicornultrafoundation/go-helios/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/dag"
 )
 
 var (

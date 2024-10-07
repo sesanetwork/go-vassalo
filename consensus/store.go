@@ -3,13 +3,13 @@ package consensus
 import (
 	"errors"
 
-	"github.com/unicornultrafoundation/go-u2u/rlp"
+	"github.com/sesanetwork/go-sesa/rlp"
 
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/memorydb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/table"
-	"github.com/unicornultrafoundation/go-helios/utils/simplewlru"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/memorydb"
+	"github.com/sesanetwork/go-vassalo/sesadb/table"
+	"github.com/sesanetwork/go-vassalo/utils/simplewlru"
 )
 
 // Store is a consensus persistent storage working over parent key-value database.
@@ -18,10 +18,10 @@ type Store struct {
 	cfg        StoreConfig
 	crit       func(error)
 
-	mainDB u2udb.Store
+	mainDB sesadb.Store
 	table  struct {
-		LastDecidedState u2udb.Store `table:"c"`
-		EpochState       u2udb.Store `table:"e"`
+		LastDecidedState sesadb.Store `table:"c"`
+		EpochState       sesadb.Store `table:"e"`
 	}
 
 	cache struct {
@@ -30,11 +30,11 @@ type Store struct {
 		FrameRoots       *simplewlru.Cache `cache:"-"` // store by pointer
 	}
 
-	epochDB    u2udb.Store
+	epochDB    sesadb.Store
 	epochTable struct {
-		Roots          u2udb.Store `table:"r"`
-		VectorIndex    u2udb.Store `table:"v"`
-		ConfirmedEvent u2udb.Store `table:"C"`
+		Roots          sesadb.Store `table:"r"`
+		VectorIndex    sesadb.Store `table:"v"`
+		ConfirmedEvent sesadb.Store `table:"C"`
 	}
 }
 
@@ -42,10 +42,10 @@ var (
 	ErrNoGenesis = errors.New("genesis not applied")
 )
 
-type EpochDBProducer func(epoch idx.Epoch) u2udb.Store
+type EpochDBProducer func(epoch idx.Epoch) sesadb.Store
 
 // NewStore creates store over key-value db.
-func NewStore(mainDB u2udb.Store, getDB EpochDBProducer, crit func(error), cfg StoreConfig) *Store {
+func NewStore(mainDB sesadb.Store, getDB EpochDBProducer, crit func(error), cfg StoreConfig) *Store {
 	s := &Store{
 		getEpochDB: getDB,
 		cfg:        cfg,
@@ -67,7 +67,7 @@ func (s *Store) initCache() {
 // NewMemStore creates store over memory map.
 // Store is always blank.
 func NewMemStore() *Store {
-	getDb := func(epoch idx.Epoch) u2udb.Store {
+	getDb := func(epoch idx.Epoch) sesadb.Store {
 		return memorydb.New()
 	}
 	cfg := LiteStoreConfig()
@@ -128,7 +128,7 @@ func (s *Store) openEpochDB(n idx.Epoch) error {
  */
 
 // set RLP value
-func (s *Store) set(table u2udb.Store, key []byte, val interface{}) {
+func (s *Store) set(table sesadb.Store, key []byte, val interface{}) {
 	buf, err := rlp.EncodeToBytes(val)
 	if err != nil {
 		s.crit(err)
@@ -140,7 +140,7 @@ func (s *Store) set(table u2udb.Store, key []byte, val interface{}) {
 }
 
 // get RLP value
-func (s *Store) get(table u2udb.Store, key []byte, to interface{}) interface{} {
+func (s *Store) get(table sesadb.Store, key []byte, to interface{}) interface{} {
 	buf, err := table.Get(key)
 	if err != nil {
 		s.crit(err)

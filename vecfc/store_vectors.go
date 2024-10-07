@@ -1,11 +1,11 @@
 package vecfc
 
 import (
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
-func (vi *Index) getBytes(table u2udb.Store, id hash.Event) []byte {
+func (vi *Index) getBytes(table sesadb.Store, id hash.Event) []byte {
 	key := id.Bytes()
 	b, err := table.Get(key)
 	if err != nil {
@@ -14,7 +14,7 @@ func (vi *Index) getBytes(table u2udb.Store, id hash.Event) []byte {
 	return b
 }
 
-func (vi *Index) setBytes(table u2udb.Store, id hash.Event, b []byte) {
+func (vi *Index) setBytes(table sesadb.Store, id hash.Event, b []byte) {
 	key := id.Bytes()
 	err := table.Put(key, b)
 	if err != nil {

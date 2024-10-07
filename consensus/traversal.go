@@ -3,8 +3,8 @@ package consensus
 import (
 	"errors"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
 )
 
 type eventFilterFn func(event dag.Event) bool

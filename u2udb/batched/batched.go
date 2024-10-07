@@ -1,14 +1,14 @@
 package batched
 
-import "github.com/unicornultrafoundation/go-helios/u2udb"
+import "github.com/sesanetwork/go-vassalo/sesadb"
 
 // Store is a wrapper which translates every Put/Delete op into a batch
 type Store struct {
-	u2udb.Store
-	batch u2udb.Batch
+	sesadb.Store
+	batch sesadb.Batch
 }
 
-func Wrap(s u2udb.Store) *Store {
+func Wrap(s sesadb.Store) *Store {
 	return &Store{
 		Store: s,
 		batch: s.NewBatch(),
@@ -23,7 +23,7 @@ func (s *Store) Reset() {
 	s.batch.Reset()
 }
 
-func (s *Store) Replay(w u2udb.Writer) error {
+func (s *Store) Replay(w sesadb.Writer) error {
 	return s.batch.Replay(w)
 }
 
@@ -37,7 +37,7 @@ func (s *Store) Flush() error {
 }
 
 func (s *Store) MayFlush() (bool, error) {
-	if s.batch.ValueSize() <= u2udb.IdealBatchSize {
+	if s.batch.ValueSize() <= sesadb.IdealBatchSize {
 		return false, nil
 	}
 	return true, s.Flush()

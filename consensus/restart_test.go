@@ -7,15 +7,15 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/dag/tdag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/native/pos"
-	"github.com/unicornultrafoundation/go-helios/types"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/memorydb"
-	"github.com/unicornultrafoundation/go-helios/utils/adapters"
-	"github.com/unicornultrafoundation/go-helios/vecfc"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/dag/tdag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/pos"
+	"github.com/sesanetwork/go-vassalo/types"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/memorydb"
+	"github.com/sesanetwork/go-vassalo/utils/adapters"
+	"github.com/sesanetwork/go-vassalo/vecfc"
 )
 
 func TestRestart_1(t *testing.T) {
@@ -175,7 +175,7 @@ func testRestartAndReset(t *testing.T, weights []pos.Weight, mutateWeights bool,
 				it.Release()
 			}
 			restartEpoch := prev.store.GetEpoch()
-			store.getEpochDB = func(epoch idx.Epoch) u2udb.Store {
+			store.getEpochDB = func(epoch idx.Epoch) sesadb.Store {
 				if epoch == restartEpoch {
 					return restartEpochDB
 				}

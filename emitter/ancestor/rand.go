@@ -4,7 +4,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
+	"github.com/sesanetwork/go-vassalo/hash"
 )
 
 /*

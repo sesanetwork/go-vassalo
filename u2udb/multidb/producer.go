@@ -5,28 +5,28 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/table"
-	"github.com/unicornultrafoundation/go-helios/utils/fmtfilter"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/table"
+	"github.com/sesanetwork/go-vassalo/utils/fmtfilter"
 )
 
 type Producer struct {
 	routingTable    map[string]Route
 	routingFmt      []scanfRoute
-	usedProducers   map[TypeName]u2udb.FullDBProducer
-	allProducers    map[TypeName]u2udb.FullDBProducer
+	usedProducers   map[TypeName]sesadb.FullDBProducer
+	allProducers    map[TypeName]sesadb.FullDBProducer
 	tableRecordsKey []byte
 }
 
 // NewProducer of a combined producer for multiple types of DBs.
-func NewProducer(producers map[TypeName]u2udb.FullDBProducer, routingTable map[string]Route, tableRecordsKey []byte) (*Producer, error) {
+func NewProducer(producers map[TypeName]sesadb.FullDBProducer, routingTable map[string]Route, tableRecordsKey []byte) (*Producer, error) {
 	if _, ok := routingTable[""]; !ok {
 		return nil, errors.New("default route must always be defined")
 	}
 	// compile regular expressions
 	routingFmt := make([]scanfRoute, 0, len(routingTable))
 	exactRoutingTable := make(map[string]Route, len(routingTable))
-	used := make(map[TypeName]u2udb.FullDBProducer)
+	used := make(map[TypeName]sesadb.FullDBProducer)
 	for req, route := range routingTable {
 		used[route.Type] = producers[route.Type]
 		if !strings.ContainsRune(req, '%') && !strings.ContainsRune(route.Name, '%') {
@@ -96,7 +96,7 @@ func tablesConflicting(a, b string) bool {
 	return strings.HasPrefix(a, b) || strings.HasPrefix(b, a)
 }
 
-func (p *Producer) handleRoute(db u2udb.Store, req string, route Route) error {
+func (p *Producer) handleRoute(db sesadb.Store, req string, route Route) error {
 	records, err := ReadTablesList(db, p.tableRecordsKey)
 	if err != nil {
 		return err
@@ -121,7 +121,7 @@ func (p *Producer) handleRoute(db u2udb.Store, req string, route Route) error {
 }
 
 // OpenDB or create db with name.
-func (p *Producer) OpenDB(req string) (u2udb.Store, error) {
+func (p *Producer) OpenDB(req string) (sesadb.Store, error) {
 	route := p.RouteOf(req)
 
 	producer := p.usedProducers[route.Type]

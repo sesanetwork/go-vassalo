@@ -3,7 +3,7 @@ package itemsfetcher
 import (
 	"time"
 
-	"github.com/unicornultrafoundation/go-helios/utils/cachescale"
+	"github.com/sesanetwork/go-vassalo/utils/cachescale"
 )
 
 type Config struct {

@@ -1,23 +1,23 @@
 package skiperrors
 
-import "github.com/unicornultrafoundation/go-helios/u2udb"
+import "github.com/sesanetwork/go-vassalo/sesadb"
 
-// wrapper is a u2udb.Store wrapper around any u2udb.Store.
+// wrapper is a sesadb.Store wrapper around any sesadb.Store.
 // It ignores some errors of underlying store.
 // NOTE: ignoring is not implemented at Iterator, Batch, .
 type wrapper struct {
 	readWrapper
-	underlying u2udb.Store
+	underlying sesadb.Store
 }
 
 type readWrapper struct {
-	reader u2udb.IteratedReader
+	reader sesadb.IteratedReader
 
 	errs []error
 }
 
-// Wrap returns a wrapped u2udb.Store.
-func Wrap(db u2udb.Store, errs ...error) u2udb.Store {
+// Wrap returns a wrapped sesadb.Store.
+func Wrap(db sesadb.Store, errs ...error) sesadb.Store {
 	return &wrapper{
 		readWrapper: readWrapper{
 			reader: db,
@@ -83,14 +83,14 @@ func (f *wrapper) Delete(key []byte) error {
 
 // NewBatch creates a write-only database that buffers changes to its host db
 // until a final write is called.
-func (f *wrapper) NewBatch() u2udb.Batch {
+func (f *wrapper) NewBatch() sesadb.Batch {
 	return f.underlying.NewBatch()
 }
 
 // NewIterator creates a binary-alphabetical iterator over a subset
 // of database content with a particular key prefix, starting at a particular
 // initial key (or after, if it does not exist).
-func (f *readWrapper) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (f *readWrapper) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	return f.reader.NewIterator(prefix, start)
 }
 
@@ -99,7 +99,7 @@ func (f *readWrapper) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
 // content of snapshot are guaranteed to be consistent.
 //
 // The snapshot must be released after use, by calling Release method.
-func (f *wrapper) GetSnapshot() (u2udb.Snapshot, error) {
+func (f *wrapper) GetSnapshot() (sesadb.Snapshot, error) {
 	snap, err := f.underlying.GetSnapshot()
 	if err != nil {
 		return nil, err
@@ -154,7 +154,7 @@ func (f *wrapper) Drop() {
 // Snapshot is a DB snapshot.
 type Snapshot struct {
 	readWrapper
-	snap u2udb.Snapshot
+	snap sesadb.Snapshot
 }
 
 func (s *Snapshot) Release() {

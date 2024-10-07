@@ -1,6 +1,6 @@
 package consensus
 
-import "github.com/unicornultrafoundation/go-helios/utils/cachescale"
+import "github.com/sesanetwork/go-vassalo/utils/cachescale"
 
 type Config struct {
 }

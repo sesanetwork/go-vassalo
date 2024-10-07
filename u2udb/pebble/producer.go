@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 type Producer struct {
@@ -14,7 +14,7 @@ type Producer struct {
 }
 
 // NewProducer of Pebble db.
-func NewProducer(datadir string, getCacheFdLimit func(string) (int, int)) u2udb.IterableDBProducer {
+func NewProducer(datadir string, getCacheFdLimit func(string) (int, int)) sesadb.IterableDBProducer {
 	return &Producer{
 		datadir:         datadir,
 		getCacheFdLimit: getCacheFdLimit,
@@ -39,7 +39,7 @@ func (p *Producer) Names() []string {
 }
 
 // OpenDB or create db with name.
-func (p *Producer) OpenDB(name string) (u2udb.Store, error) {
+func (p *Producer) OpenDB(name string) (sesadb.Store, error) {
 	path := p.resolvePath(name)
 
 	err := os.MkdirAll(path, 0700)

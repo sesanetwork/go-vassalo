@@ -1,22 +1,22 @@
 package table
 
-//go:generate go run github.com/golang/mock/mockgen -package=table -destination=mock_test.go github.com/Fantom-foundation/lachesis-base/u2udb DBProducer,DropableStore
+//go:generate go run github.com/golang/mock/mockgen -package=table -destination=mock_test.go github.com/Fantom-foundation/lachesis-base/sesadb DBProducer,DropableStore
 
 import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
-	u2udb "github.com/unicornultrafoundation/go-helios/u2udb"
+	sesadb "github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 type testTables struct {
 	NoTable interface{}
-	Manual  u2udb.Store `table:"-"`
-	Nil     u2udb.Store `table:"-"`
-	Auto1   u2udb.Store `table:"A"`
-	Auto2   u2udb.Store `table:"B"`
-	Auto3   u2udb.Store `table:"C"`
+	Manual  sesadb.Store `table:"-"`
+	Nil     sesadb.Store `table:"-"`
+	Auto1   sesadb.Store `table:"A"`
+	Auto2   sesadb.Store `table:"B"`
+	Auto3   sesadb.Store `table:"C"`
 }
 
 func TestOpenTables(t *testing.T) {
@@ -25,7 +25,7 @@ func TestOpenTables(t *testing.T) {
 
 	prefix := "prefix"
 
-	mockStore := func() u2udb.Store {
+	mockStore := func() sesadb.Store {
 		store := NewMockDropableStore(ctrl)
 		store.EXPECT().Close().
 			Times(1).
@@ -36,7 +36,7 @@ func TestOpenTables(t *testing.T) {
 	dbs := NewMockDBProducer(ctrl)
 	dbs.EXPECT().OpenDB(gomock.Any()).
 		Times(3).
-		DoAndReturn(func(name string) (u2udb.Store, error) {
+		DoAndReturn(func(name string) (sesadb.Store, error) {
 			require.Contains(name, prefix)
 			return mockStore(), nil
 		})

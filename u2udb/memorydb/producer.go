@@ -1,8 +1,8 @@
 package memorydb
 
-import "github.com/unicornultrafoundation/go-helios/u2udb"
+import "github.com/sesanetwork/go-vassalo/sesadb"
 
-type Mod func(store u2udb.Store) u2udb.Store
+type Mod func(store sesadb.Store) sesadb.Store
 
 type Producer struct {
 	fs   *fakeFS
@@ -10,7 +10,7 @@ type Producer struct {
 }
 
 // NewProducer of memory db.
-func NewProducer(namespace string, mods ...Mod) u2udb.IterableDBProducer {
+func NewProducer(namespace string, mods ...Mod) sesadb.IterableDBProducer {
 	return &Producer{
 		fs:   newFakeFS(namespace),
 		mods: mods,
@@ -23,7 +23,7 @@ func (p *Producer) Names() []string {
 }
 
 // OpenDB or create db with name.
-func (p *Producer) OpenDB(name string) (u2udb.Store, error) {
+func (p *Producer) OpenDB(name string) (sesadb.Store, error) {
 	db := p.fs.OpenFakeDB(name)
 
 	for _, mod := range p.mods {

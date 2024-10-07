@@ -1,6 +1,6 @@
 package consensus
 
-import "github.com/unicornultrafoundation/go-helios/native/idx"
+import "github.com/sesanetwork/go-vassalo/native/idx"
 
 const dsKey = "d"
 

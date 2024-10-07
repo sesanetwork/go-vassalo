@@ -1,8 +1,8 @@
 package consensus
 
 import (
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
 )
 
 // EventSource is a callback for getting events from an external storage.

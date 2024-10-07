@@ -3,19 +3,19 @@ package flaggedproducer
 import (
 	"sync/atomic"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/flushable"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/flushable"
 )
 
 type flaggedStore struct {
-	u2udb.Store
+	sesadb.Store
 	DropFn     func()
 	Dirty      uint32
 	flushIDKey []byte
 }
 
 type flaggedBatch struct {
-	u2udb.Batch
+	sesadb.Batch
 	db *flaggedStore
 }
 
@@ -54,7 +54,7 @@ func (s *flaggedStore) Delete(key []byte) error {
 	return s.Store.Delete(key)
 }
 
-func (s *flaggedStore) NewBatch() u2udb.Batch {
+func (s *flaggedStore) NewBatch() sesadb.Batch {
 	return &flaggedBatch{
 		Batch: s.Store.NewBatch(),
 		db:    s,

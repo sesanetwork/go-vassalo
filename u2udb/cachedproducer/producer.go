@@ -4,17 +4,17 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 type cacheState struct {
-	opened     map[string]u2udb.Store
+	opened     map[string]sesadb.Store
 	refCounter map[string]int
 	notDropped map[string]bool
 	mu         sync.Mutex
 }
 
-func openDB(p u2udb.DBProducer, c *cacheState, name string) (u2udb.Store, error) {
+func openDB(p sesadb.DBProducer, c *cacheState, name string) (sesadb.Store, error) {
 	{ // protected by mutex
 		c.mu.Lock()
 		c.notDropped[name] = true
@@ -82,40 +82,40 @@ func openDB(p u2udb.DBProducer, c *cacheState, name string) (u2udb.Store, error)
 }
 
 type AllDBProducer struct {
-	u2udb.FullDBProducer
+	sesadb.FullDBProducer
 	cacheState
 }
 
-func WrapAll(p u2udb.FullDBProducer) *AllDBProducer {
+func WrapAll(p sesadb.FullDBProducer) *AllDBProducer {
 	return &AllDBProducer{
 		FullDBProducer: p,
 		cacheState: cacheState{
-			opened:     make(map[string]u2udb.Store),
+			opened:     make(map[string]sesadb.Store),
 			refCounter: make(map[string]int),
 			notDropped: make(map[string]bool),
 		},
 	}
 }
 
-func (p *AllDBProducer) OpenDB(name string) (u2udb.Store, error) {
+func (p *AllDBProducer) OpenDB(name string) (sesadb.Store, error) {
 	return openDB(p.FullDBProducer, &p.cacheState, name)
 }
 
 type DBProducer struct {
-	u2udb.DBProducer
+	sesadb.DBProducer
 	cacheState
 }
 
-func Wrap(p u2udb.DBProducer) *DBProducer {
+func Wrap(p sesadb.DBProducer) *DBProducer {
 	return &DBProducer{
 		DBProducer: p,
 		cacheState: cacheState{
-			opened:     make(map[string]u2udb.Store),
+			opened:     make(map[string]sesadb.Store),
 			notDropped: make(map[string]bool),
 		},
 	}
 }
 
-func (p *DBProducer) OpenDB(name string) (u2udb.Store, error) {
+func (p *DBProducer) OpenDB(name string) (sesadb.Store, error) {
 	return openDB(p.DBProducer, &p.cacheState, name)
 }

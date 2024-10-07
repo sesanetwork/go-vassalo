@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/unicornultrafoundation/go-helios/consensus/election"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/native/pos"
+	"github.com/sesanetwork/go-vassalo/consensus/election"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/pos"
 )
 
 const (

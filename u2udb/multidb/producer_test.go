@@ -6,11 +6,11 @@ import (
 
 	"github.com/status-im/keycard-go/hexutils"
 	"github.com/stretchr/testify/assert"
-	"github.com/unicornultrafoundation/go-u2u/common"
+	"github.com/sesanetwork/go-sesa/common"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/flushable"
-	"github.com/unicornultrafoundation/go-helios/u2udb/memorydb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/flushable"
+	"github.com/sesanetwork/go-vassalo/sesadb/memorydb"
 )
 
 func TestNewProducer(t *testing.T) {
@@ -35,7 +35,7 @@ func TestNewProducer(t *testing.T) {
 		dbs := memorydb.NewProducer("")
 		pool := flushable.NewSyncedPool(dbs, []byte("flushID"))
 
-		producers := map[TypeName]u2udb.FullDBProducer{
+		producers := map[TypeName]sesadb.FullDBProducer{
 			"": pool,
 		}
 
@@ -55,7 +55,7 @@ func TestNewProducer(t *testing.T) {
 		_, err := pool.GetUnderlying(dbname1)
 		assert.Nil(t, err)
 
-		producers := map[TypeName]u2udb.FullDBProducer{
+		producers := map[TypeName]sesadb.FullDBProducer{
 			"": pool,
 		}
 
@@ -110,7 +110,7 @@ func TestNewProducer(t *testing.T) {
 		_, err = pool.GetUnderlying(dbname2)
 		assert.Nil(t, err)
 
-		producers := map[TypeName]u2udb.FullDBProducer{
+		producers := map[TypeName]sesadb.FullDBProducer{
 			"": pool,
 		}
 
@@ -132,7 +132,7 @@ func TestNewProducer(t *testing.T) {
 		_, err := pool.GetUnderlying(dbname1)
 		assert.Nil(t, err)
 
-		producers := map[TypeName]u2udb.FullDBProducer{
+		producers := map[TypeName]sesadb.FullDBProducer{
 			"": pool,
 		}
 

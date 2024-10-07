@@ -1,4 +1,4 @@
-module github.com/unicornultrafoundation/go-helios
+module github.com/sesanetwork/go-vassalo
 
 go 1.19
 
@@ -11,7 +11,7 @@ require (
 	github.com/status-im/keycard-go v0.2.0
 	github.com/stretchr/testify v1.8.4
 	github.com/syndtr/goleveldb v1.0.1-0.20220614013038-64ee5596c38a
-	github.com/unicornultrafoundation/go-u2u v1.0.0-rc1.0.20231015194805-e285ed001123
+	github.com/sesanetwork/go-sesa v1.0.0-rc1.0.20231015194805-e285ed001123
 )
 
 require (

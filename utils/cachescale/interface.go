@@ -1,6 +1,6 @@
 package cachescale
 
-import "github.com/unicornultrafoundation/go-helios/native/idx"
+import "github.com/sesanetwork/go-vassalo/native/idx"
 
 type Func interface {
 	I(int) int

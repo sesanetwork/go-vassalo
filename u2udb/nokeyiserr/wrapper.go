@@ -3,7 +3,7 @@ package nokeyiserr
 import (
 	"errors"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 var (
@@ -11,15 +11,15 @@ var (
 )
 
 type Wrapper struct {
-	u2udb.Store
+	sesadb.Store
 }
 
 type Snapshot struct {
-	u2udb.Snapshot
+	sesadb.Snapshot
 }
 
 // Wrap creates new Wrapper
-func Wrap(db u2udb.Store) *Wrapper {
+func Wrap(db sesadb.Store) *Wrapper {
 	return &Wrapper{db}
 }
 
@@ -37,7 +37,7 @@ func (w *Wrapper) Get(key []byte) ([]byte, error) {
 // content of snapshot are guaranteed to be consistent.
 //
 // The snapshot must be released after use, by calling Release method.
-func (w *Wrapper) GetSnapshot() (u2udb.Snapshot, error) {
+func (w *Wrapper) GetSnapshot() (sesadb.Snapshot, error) {
 	snap, err := w.Store.GetSnapshot()
 	if err != nil {
 		return nil, err

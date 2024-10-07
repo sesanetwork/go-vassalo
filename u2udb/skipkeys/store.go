@@ -3,15 +3,15 @@ package skipkeys
 import (
 	"bytes"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 type Store struct {
-	u2udb.Store
+	sesadb.Store
 	skipPrefix []byte
 }
 
-func Wrap(store u2udb.Store, skipPrefix []byte) *Store {
+func Wrap(store sesadb.Store, skipPrefix []byte) *Store {
 	return &Store{store, skipPrefix}
 }
 
@@ -34,12 +34,12 @@ func (s *Store) Get(key []byte) ([]byte, error) {
 // NewIterator creates a binary-alphabetical iterator over a subset
 // of database content with a particular key prefix, starting at a particular
 // initial key (or after, if it does not exist).
-func (s *Store) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (s *Store) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	return iterator{s.Store.NewIterator(prefix, start), s.skipPrefix}
 }
 
 type iterator struct {
-	u2udb.Iterator
+	sesadb.Iterator
 	skipPrefix []byte
 }
 

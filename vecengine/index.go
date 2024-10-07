@@ -4,12 +4,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/native/pos"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/table"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/pos"
+	"github.com/sesanetwork/go-vassalo/sesadb"
+	"github.com/sesanetwork/go-vassalo/sesadb/table"
 )
 
 type Callbacks struct {
@@ -33,10 +33,10 @@ type Engine struct {
 
 	callback Callbacks
 
-	vecDb u2udb.FlushableKVStore
+	vecDb sesadb.FlushableKVStore
 	table struct {
-		EventBranch  u2udb.Store `table:"b"`
-		BranchesInfo u2udb.Store `table:"B"`
+		EventBranch  sesadb.Store `table:"b"`
+		BranchesInfo sesadb.Store `table:"B"`
 	}
 }
 
@@ -51,7 +51,7 @@ func NewIndex(crit func(error), callbacks Callbacks) *Engine {
 }
 
 // Reset resets buffers.
-func (vi *Engine) Reset(validators *pos.Validators, db u2udb.FlushableKVStore, getEvent func(hash.Event) dag.Event) {
+func (vi *Engine) Reset(validators *pos.Validators, db sesadb.FlushableKVStore, getEvent func(hash.Event) dag.Event) {
 	// use wrapper to be able to drop failed events by dropping cache
 	vi.getEvent = getEvent
 	vi.vecDb = db

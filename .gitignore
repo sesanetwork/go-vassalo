@@ -33,7 +33,7 @@ glide.lock
 *.tgz
 *.zip
 
-# helios project specific
+# vassalo project specific
 scripts/certs
 scripts/nodes
 scripts/peers.json
@@ -41,7 +41,7 @@ scripts/docker/upx
 nodes
 peers.json
 certs
-helios_*
+vassalo_*
 !*.go
 *.log
 *.graph

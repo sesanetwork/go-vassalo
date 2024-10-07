@@ -3,7 +3,7 @@ package hash
 import (
 	"sync"
 
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 var (

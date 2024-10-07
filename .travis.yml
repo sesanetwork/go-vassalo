@@ -3,7 +3,7 @@ language: go
 go:
   - 1.13.x
 
-go_import_path: github.com/unicornultrafoundation/go-helios
+go_import_path: github.com/sesanetwork/go-vassalo
 
 cache:
   directories:

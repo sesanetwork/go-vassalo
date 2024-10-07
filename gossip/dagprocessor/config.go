@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/utils/cachescale"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/utils/cachescale"
 )
 
 type Config struct {

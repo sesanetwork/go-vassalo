@@ -3,7 +3,7 @@ package wlru
 import (
 	"sync"
 
-	"github.com/unicornultrafoundation/go-helios/utils/simplewlru"
+	"github.com/sesanetwork/go-vassalo/utils/simplewlru"
 )
 
 // Cache is a thread-safe fixed size LRU cache.

@@ -1,9 +1,9 @@
 package vecflushable
 
 import (
-	"github.com/unicornultrafoundation/go-u2u/common"
+	"github.com/sesanetwork/go-sesa/common"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 // TestSizeLimit is used as the limit in unit-test of packages that use vecflushable
@@ -11,13 +11,13 @@ const TestSizeLimit = 100000
 
 type backedMap struct {
 	cache      map[string][]byte
-	backup     u2udb.Store
+	backup     sesadb.Store
 	memSize    int
 	maxMemSize int
 	batchSize  int
 }
 
-func newBackedMap(backup u2udb.Store, maxMemSize, batchSize int) *backedMap {
+func newBackedMap(backup sesadb.Store, maxMemSize, batchSize int) *backedMap {
 	return &backedMap{
 		cache:      make(map[string][]byte),
 		backup:     backup,

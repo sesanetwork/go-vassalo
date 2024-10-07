@@ -4,13 +4,13 @@ import (
 	"math/rand"
 	"sync"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 type fakeFS struct {
 	Namespace string
-	Files     map[string]u2udb.Store
+	Files     map[string]sesadb.Store
 
 	sync.RWMutex
 }
@@ -34,7 +34,7 @@ func newFakeFS(namespace string) *fakeFS {
 
 	fs := &fakeFS{
 		Namespace: namespace,
-		Files:     make(map[string]u2udb.Store),
+		Files:     make(map[string]sesadb.Store),
 	}
 	fakeFSs[namespace] = fs
 	return fs
@@ -56,7 +56,7 @@ func (fs *fakeFS) ListFakeDBs() []string {
 	return ls
 }
 
-func (fs *fakeFS) OpenFakeDB(name string) u2udb.Store {
+func (fs *fakeFS) OpenFakeDB(name string) sesadb.Store {
 	fs.Lock()
 	defer fs.Unlock()
 

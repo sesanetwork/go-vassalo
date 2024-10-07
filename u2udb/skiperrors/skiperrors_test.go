@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/unicornultrafoundation/go-helios/u2udb/memorydb"
-	"github.com/unicornultrafoundation/go-helios/u2udb/table"
+	"github.com/sesanetwork/go-vassalo/sesadb/memorydb"
+	"github.com/sesanetwork/go-vassalo/sesadb/table"
 )
 
 func TestWrapper(t *testing.T) {

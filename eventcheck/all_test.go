@@ -5,14 +5,14 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/unicornultrafoundation/go-helios/eventcheck/basiccheck"
-	"github.com/unicornultrafoundation/go-helios/eventcheck/epochcheck"
-	"github.com/unicornultrafoundation/go-helios/eventcheck/parentscheck"
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/dag/tdag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/native/pos"
+	"github.com/sesanetwork/go-vassalo/eventcheck/basiccheck"
+	"github.com/sesanetwork/go-vassalo/eventcheck/epochcheck"
+	"github.com/sesanetwork/go-vassalo/eventcheck/parentscheck"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/dag/tdag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/pos"
 )
 
 type testReader struct{}

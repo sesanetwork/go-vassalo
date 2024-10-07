@@ -1,8 +1,8 @@
 package consensus
 
 import (
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/idx"
 )
 
 // SetEventConfirmedOn stores confirmed event hash.

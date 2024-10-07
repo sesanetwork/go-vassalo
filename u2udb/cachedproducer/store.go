@@ -1,9 +1,9 @@
 package cachedproducer
 
-import "github.com/unicornultrafoundation/go-helios/u2udb"
+import "github.com/sesanetwork/go-vassalo/sesadb"
 
 type StoreWithFn struct {
-	u2udb.Store
+	sesadb.Store
 	CloseFn func() error
 	DropFn  func()
 }

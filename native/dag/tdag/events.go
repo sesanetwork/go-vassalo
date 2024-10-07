@@ -3,8 +3,8 @@ package tdag
 import (
 	"strings"
 
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
 )
 
 // TestEvents is a ordered slice of events.

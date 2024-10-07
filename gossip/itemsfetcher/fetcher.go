@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/unicornultrafoundation/go-helios/utils/wlru"
-	"github.com/unicornultrafoundation/go-helios/utils/workers"
+	"github.com/sesanetwork/go-vassalo/utils/wlru"
+	"github.com/sesanetwork/go-vassalo/utils/workers"
 )
 
 /*

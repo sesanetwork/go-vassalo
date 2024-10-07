@@ -5,11 +5,11 @@ import (
 	"errors"
 	"reflect"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 // MigrateTables sets target fields to database tables.
-func MigrateTables(s interface{}, db u2udb.Store) {
+func MigrateTables(s interface{}, db sesadb.Store) {
 	value := reflect.ValueOf(s).Elem()
 
 	var keys uniqKeys
@@ -33,7 +33,7 @@ func MigrateTables(s interface{}, db u2udb.Store) {
 }
 
 // OpenTables sets target fields to database tables.
-func OpenTables(s interface{}, producer u2udb.DBProducer, baseName string) error {
+func OpenTables(s interface{}, producer sesadb.DBProducer, baseName string) error {
 	value := reflect.ValueOf(s).Elem()
 
 	var keys uniqKeys
@@ -63,7 +63,7 @@ func CloseTables(s interface{}) error {
 				continue
 			}
 
-			db := field.Interface().(u2udb.Store)
+			db := field.Interface().(sesadb.Store)
 			err := db.Close()
 			if err != nil {
 				return err

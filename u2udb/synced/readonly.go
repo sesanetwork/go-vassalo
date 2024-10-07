@@ -3,17 +3,17 @@ package synced
 import (
 	"sync"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
-// iteratedReader wrapper around any u2udb.IteratedReader.
+// iteratedReader wrapper around any sesadb.IteratedReader.
 type iteratedReader struct {
 	mu         *sync.RWMutex
-	underlying u2udb.IteratedReader
+	underlying sesadb.IteratedReader
 }
 
 // WrapIteratedReader underlying db to make its methods synced with mu.
-func WrapIteratedReader(parent u2udb.IteratedReader, mu *sync.RWMutex) u2udb.IteratedReader {
+func WrapIteratedReader(parent sesadb.IteratedReader, mu *sync.RWMutex) sesadb.IteratedReader {
 	return &iteratedReader{
 		mu:         mu,
 		underlying: parent,
@@ -21,7 +21,7 @@ func WrapIteratedReader(parent u2udb.IteratedReader, mu *sync.RWMutex) u2udb.Ite
 }
 
 // WrapSnapshot underlying db to make its methods synced with mu.
-func WrapSnapshot(parent u2udb.Snapshot, mu *sync.RWMutex) u2udb.Snapshot {
+func WrapSnapshot(parent sesadb.Snapshot, mu *sync.RWMutex) sesadb.Snapshot {
 	return &readonlySnapshot{
 		iteratedReader: iteratedReader{
 			mu:         mu,
@@ -50,7 +50,7 @@ func (ro *iteratedReader) Get(key []byte) ([]byte, error) {
 // NewIterator creates a binary-alphabetical iterator over a subset
 // of database content with a particular key prefix, starting at a particular
 // initial key (or after, if it does not exist).
-func (ro *iteratedReader) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (ro *iteratedReader) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	ro.mu.RLock()
 	defer ro.mu.RUnlock()
 
@@ -73,7 +73,7 @@ func (s *store) Stat(property string) (string, error) {
 // content of snapshot are guaranteed to be consistent.
 //
 // The snapshot must be released after use, by calling Release method.
-func (s *store) GetSnapshot() (u2udb.Snapshot, error) {
+func (s *store) GetSnapshot() (sesadb.Snapshot, error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
@@ -96,7 +96,7 @@ func (s *store) GetSnapshot() (u2udb.Snapshot, error) {
 
 type readonlyIterator struct {
 	mu       *sync.RWMutex
-	parentIt u2udb.Iterator
+	parentIt sesadb.Iterator
 }
 
 // Next scans key-value pair by key in lexicographic order. Looks in cache first,
@@ -136,7 +136,7 @@ func (it *readonlyIterator) Release() {
 
 type readonlySnapshot struct {
 	iteratedReader
-	snap u2udb.Snapshot
+	snap sesadb.Snapshot
 }
 
 func (s *readonlySnapshot) Release() {

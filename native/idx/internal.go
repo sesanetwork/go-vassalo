@@ -1,6 +1,6 @@
 package idx
 
-import "github.com/unicornultrafoundation/go-helios/common/bigendian"
+import "github.com/sesanetwork/go-vassalo/common/bigendian"
 
 type (
 	// Validator numeration.

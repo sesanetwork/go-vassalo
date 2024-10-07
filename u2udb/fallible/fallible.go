@@ -4,23 +4,23 @@ import (
 	"errors"
 	"sync/atomic"
 
-	"github.com/unicornultrafoundation/go-helios/u2udb"
+	"github.com/sesanetwork/go-vassalo/sesadb"
 )
 
 var (
 	errWriteLimit = errors.New("write limit is over")
 )
 
-// Fallible is a u2udb.Store wrapper around any u2udb.Store.
+// Fallible is a sesadb.Store wrapper around any sesadb.Store.
 // It falls when write counter is full for test purpose.
 type Fallible struct {
-	Underlying u2udb.Store
+	Underlying sesadb.Store
 
 	writes int32
 }
 
-// Wrap returns a wrapped u2udb.Store with counter 0. Set it manually.
-func Wrap(db u2udb.Store) *Fallible {
+// Wrap returns a wrapped sesadb.Store with counter 0. Set it manually.
+func Wrap(db sesadb.Store) *Fallible {
 	return &Fallible{
 		Underlying: db,
 	}
@@ -72,14 +72,14 @@ func (f *Fallible) Delete(key []byte) error {
 
 // NewBatch creates a write-only database that buffers changes to its host db
 // until a final write is called.
-func (f *Fallible) NewBatch() u2udb.Batch {
+func (f *Fallible) NewBatch() sesadb.Batch {
 	return f.Underlying.NewBatch()
 }
 
 // NewIterator creates a binary-alphabetical iterator over a subset
 // of database content with a particular key prefix, starting at a particular
 // initial key (or after, if it does not exist).
-func (f *Fallible) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
+func (f *Fallible) NewIterator(prefix []byte, start []byte) sesadb.Iterator {
 	return f.Underlying.NewIterator(prefix, start)
 }
 
@@ -88,7 +88,7 @@ func (f *Fallible) NewIterator(prefix []byte, start []byte) u2udb.Iterator {
 // content of snapshot are guaranteed to be consistent.
 //
 // The snapshot must be released after use, by calling Release method.
-func (f *Fallible) GetSnapshot() (u2udb.Snapshot, error) {
+func (f *Fallible) GetSnapshot() (sesadb.Snapshot, error) {
 	return f.Underlying.GetSnapshot()
 }
 

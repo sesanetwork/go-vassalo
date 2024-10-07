@@ -4,12 +4,12 @@ import (
 	"math"
 	"sort"
 
-	"github.com/unicornultrafoundation/go-helios/consensus/dagidx"
-	"github.com/unicornultrafoundation/go-helios/hash"
-	"github.com/unicornultrafoundation/go-helios/native/dag"
-	"github.com/unicornultrafoundation/go-helios/native/idx"
-	"github.com/unicornultrafoundation/go-helios/native/pos"
-	"github.com/unicornultrafoundation/go-helios/utils/wmedian"
+	"github.com/sesanetwork/go-vassalo/consensus/dagidx"
+	"github.com/sesanetwork/go-vassalo/hash"
+	"github.com/sesanetwork/go-vassalo/native/dag"
+	"github.com/sesanetwork/go-vassalo/native/idx"
+	"github.com/sesanetwork/go-vassalo/native/pos"
+	"github.com/sesanetwork/go-vassalo/utils/wmedian"
 )
 
 type DagIndexQ interface {
